@@ -4,7 +4,7 @@ from django.db import models
 
 class Author(models.Model):
 
-    profile = models.ForeignKey('users.Profile', on_delete=models.CASCADE)
+    profile = models.OneToOneField('users.Profile', on_delete=models.CASCADE)
     anonym = models.CharField(max_length=255)
     # ToDo Add more fields
     created_at = models.DateTimeField(auto_now_add=True)
