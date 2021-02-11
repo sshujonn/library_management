@@ -7,6 +7,7 @@ from authors.models import Author
 class Books(models.Model):
     name = models.CharField(max_length=250)
     cover_image = models.ImageField(null=True, upload_to='static/img/cover_image')
+    authors = models.ManyToManyField(Author)
+    #ToDo Add book category
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    authors = models.ManyToManyField(Author)
