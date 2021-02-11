@@ -10,3 +10,7 @@
 - Follow the steps from https://docs.djangoproject.com/en/3.1/topics/install/
 
 ####How to run this project
+Create Virtual Env 
+[pip install virtualenvwrapper-win]
+[mkvirtualenv my_django_environment]
+
