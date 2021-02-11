@@ -18,6 +18,7 @@ from django.urls import path
 from django.conf.urls import include, url
 from users import  views as user_view
 from books import views as book_view
+from authors import views as author_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +27,9 @@ urlpatterns = [
     url(r'create-book', book_view.create_book, name="CreateBook"),
     url(r'update-book', book_view.update_book, name="UpdateBook"),
     url(r'delete-book', book_view.delete_book, name="DeleteBook"),
+
+
+    url(r'create-author', author_view.create_author, name="CreateAuthor"),
+    url(r'update-author', author_view.update_author, name="UpdateAuthor"),
+    url(r'delete-author', author_view.delete_author, name="DeleteAuthor"),
 ]

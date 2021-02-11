@@ -11,3 +11,6 @@ class Books(models.Model):
     #ToDo Add book category
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class Categories(models.Model):
+    name = models.CharField(max_length=250)

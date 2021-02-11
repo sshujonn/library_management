@@ -23,6 +23,8 @@ def create_book(request):
                 return Response(response, status = status.HTTP_200_OK)
             else:
                 return Response(response, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"message": "Invalid Value"},status=status.HTTP_400_BAD_REQUEST)
 
     except Exception as ex:
         return Response({"message": "Something happened wrong!", "data": ex},
@@ -46,6 +48,8 @@ def update_book(request):
                 return Response(response, status = status.HTTP_200_OK)
             else:
                 return Response(response, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"message": "Invalid Value"},status=status.HTTP_400_BAD_REQUEST)
 
     except Exception as ex:
         return Response({"message": "Something happened wrong!", "data": ex},
@@ -69,6 +73,8 @@ def delete_book(request):
                 return Response(response, status = status.HTTP_200_OK)
             else:
                 return Response(response, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"message": "Invalid Value"},status=status.HTTP_400_BAD_REQUEST)
 
     except Exception as ex:
         return Response({"message": "Something happened wrong!", "data": ex},
