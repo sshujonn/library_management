@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from users.forms import EmailSignUpForm, EmailSignInForm, CreateGroupForm, AuthorizeUserForm
 from users.service import ProfileService
 from users.models import Profile
+from library_management import config
 
 
 # Create your views here.
@@ -91,7 +92,7 @@ def authorize_user(request):
         # import pdb;pdb.set_trace()
         if form.is_valid():
             profile_id = form.cleaned_data["user_id"]
-            library_admin = request.user.groups.filter(name="library_admin")
+            library_admin = request.user.groups.filter(name=config.LIBRARY_ADMIN)
             if request.user.is_superuser or len(library_admin) > 0:
                 response = ProfileService().authorize_user(profile_id)
                 if response.get("id"):
