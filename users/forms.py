@@ -17,3 +17,10 @@ class EmailSignUpForm(SignUpForm):
 class EmailSignInForm(forms.Form):
     email = forms.CharField()
     password = forms.CharField()
+
+
+class CreateGroupForm(forms.Form):
+    name = forms.CharField()
+
+class AuthorizeUserForm(forms.Form):
+    user_id = forms.IntegerField(required=True)

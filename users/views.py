@@ -1,9 +1,10 @@
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 
-from users.forms import EmailSignUpForm, EmailSignInForm
+from users.forms import EmailSignUpForm, EmailSignInForm, CreateGroupForm, AuthorizeUserForm
 from users.service import ProfileService
+from users.models import Profile
 
 
 # Create your views here.
@@ -12,7 +13,6 @@ from users.service import ProfileService
 @authentication_classes([])
 def email_signup(request):
     try:
-
         form = EmailSignUpForm(request.POST)
 
         if form.is_valid():
@@ -24,7 +24,7 @@ def email_signup(request):
             if response.get("id"):
                 return Response(response, status=status.HTTP_200_OK)
             else:
-                return Response(response, status=status.HTTP_400_BAD_REQUEST)
+                return Response(response, status=status.HTTP_409_CONFLICT)
         else:
             return Response({"detail": "Bad Request", "data": form.errors}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -47,7 +47,7 @@ def email_signin(request):
 
             result = ProfileService().get_user_by_email(email, password)
             if not result:
-                return Response({"detail": "Please check your credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+                return Response({"detail": "invalid credentials or unauthorized user"}, status=status.HTTP_401_UNAUTHORIZED)
 
             return Response({"detail": "Success", "data": result}, status=status.HTTP_200_OK)
         else:
@@ -59,4 +59,51 @@ def email_signin(request):
         return Response({"message": "Something happened wrong!", "data": ex},
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+#To Create Group through API, Can be created from admin panel either
+@api_view(['POST'])
+def create_group(request):
+    form = CreateGroupForm(request.POST)
+    try:
+        if form.is_valid():
+            name = form.cleaned_data["name"]
+            if request.user.is_superuser:
+                response = ProfileService().create_group(name)
+                if response.get("id"):
+                    return Response(response, status=status.HTTP_200_OK)
+                else:
+                    return Response(response, status=status.HTTP_409_CONFLICT)
+            else:
+                return Response({"detail": "Unauthorized Access"},
+                                status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            return Response({"detail": "Bad Request", "data": form.errors}, status=status.HTTP_400_BAD_REQUEST)
 
+    except Exception as ex:
+        return Response({"message": "Something happened wrong!", "data": ex},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['POST'])
+def authorize_user(request):
+    form = AuthorizeUserForm(request.POST)
+    try:
+
+        # import pdb;pdb.set_trace()
+        if form.is_valid():
+            profile_id = form.cleaned_data["user_id"]
+            library_admin = request.user.groups.filter(name="library_admin")
+            if request.user.is_superuser or len(library_admin) > 0:
+                response = ProfileService().authorize_user(profile_id)
+                if response.get("id"):
+                    return Response(response, status=status.HTTP_200_OK)
+                else:
+                    return Response(response, status=status.HTTP_404_NOT_FOUND)
+            else:
+                return Response({"detail": "Unauthorized Access"},
+                                status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            return Response({"detail": "Bad Request", "data": form.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+    except Exception as ex:
+        return Response({"message": "Something happened wrong!", "data": ex},
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)

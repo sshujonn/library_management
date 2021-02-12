@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from oauth2_provider.models import AccessToken, RefreshToken, Application
 from datetime import datetime, timedelta
+from django.contrib.auth.models import Group, Permission
 
 from library_management import config
 from library_management.settings import OAUTH2_PROVIDER
@@ -40,7 +41,7 @@ class ProfileService(DefaultService):
             user = Profile.objects.filter(email=email)[:1].get()
         except:
             return False
-        if user.check_password(password):
+        if user.check_password(password) and user.is_authorized:
             if user.is_active is False:
                 user.is_active = True
                 user.save()
@@ -80,8 +81,41 @@ class ProfileService(DefaultService):
 
         return result
 
+    def create_group(self,name):
+        try:
+            group = Group.objects.filter(name=name)[:1].get()
+        except:
+            group = None
+        if group:
+            return {"message": "Already Exists"}
+        else:
+            new_group = Group(
+                name=name
+            )
+            new_group.save()
+            serializer = GroupSerializer(new_group)
+            return serializer.data
 
 
+    def authorize_user(self,profile_id):
+        try:
+            user = Profile.objects.get(pk=profile_id)
+        except:
+            user = None
+        if not user:
+            return {"message": "User doesn't Exist"}
+        else:
+            setattr(user,"is_authorized", True)
+            user.save()
+            serializer = ProfileSerializer(user)
+            return serializer.data
+
+
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('id','name',)
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
