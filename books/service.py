@@ -1,5 +1,7 @@
-from books.models import Books
 from rest_framework import serializers
+
+from books.models import Books
+
 
 class BooksService:
     def create_book(self, data):
@@ -18,7 +20,6 @@ class BooksService:
         else:
             return {"message": "Already Exists"}
 
-
     def update_book(self, data):
         try:
             book = Books.objects.get(pk=data["id"])
@@ -33,7 +34,6 @@ class BooksService:
         else:
             return {"message": "Invalid book id"}
 
-
     def delete_book(self, data):
         try:
             book = Books.objects.get(pk=data["id"])
@@ -45,6 +45,7 @@ class BooksService:
             return serializer
         else:
             return {"message": "Invalid book id"}
+
 
 class BookSerializer(serializers.ModelSerializer):
     class Meta:

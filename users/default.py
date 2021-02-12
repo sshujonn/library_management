@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from oauth2_provider.models import Application
 
 
-
 class DefaultService():
     def access_token(self, client_id, client_secret, username, password, grant_type="password", scope=None):
         payload = {

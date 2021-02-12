@@ -1,6 +1,8 @@
-from users.models import Profile
 from rest_framework import serializers
+
 from users.default import DefaultService
+from users.models import Profile
+
 
 class ProfileService(DefaultService):
     def create_profile(self, data):
@@ -27,6 +29,7 @@ class ProfileService(DefaultService):
             return serializer.data
         else:
             return {"message": "Already Exists"}
+
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:

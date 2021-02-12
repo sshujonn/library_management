@@ -4,6 +4,7 @@ from authors.models import Author
 from users.models import Profile
 from users.service import ProfileSerializer
 
+
 class AuthorsService:
     def create_author(self, data):
         try:
@@ -21,7 +22,6 @@ class AuthorsService:
         else:
             return {"message": "Already Exists"}
 
-
     def update_author(self, data):
         try:
             author = Author.objects.get(pk=data["id"])
@@ -35,7 +35,6 @@ class AuthorsService:
         else:
             return {"message": "Invalid author id"}
 
-
     def delete_author(self, data):
         try:
             author = Author.objects.get(pk=data["id"])
@@ -48,8 +47,10 @@ class AuthorsService:
         else:
             return {"message": "Invalid author id"}
 
+
 class AuthorSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer(serializers.ModelSerializer)
+
     class Meta:
         model = Author
         fields = (
