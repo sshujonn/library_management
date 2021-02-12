@@ -12,3 +12,8 @@ class SignUpForm(forms.Form):
 class EmailSignUpForm(SignUpForm):
     email = forms.EmailField(required=True)
     password = forms.CharField(required=True)
+
+
+class EmailSignInForm(forms.Form):
+    email = forms.CharField()
+    password = forms.CharField()

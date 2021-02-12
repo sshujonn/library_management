@@ -25,6 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'email-signup', user_view.email_signup, name="EmailSignUp"),
+    url(r'email-signin', user_view.email_signin, name="EmailSignIn"),
+
     url(r'create-book', book_view.create_book, name="CreateBook"),
     url(r'update-book', book_view.update_book, name="UpdateBook"),
     url(r'delete-book', book_view.delete_book, name="DeleteBook"),

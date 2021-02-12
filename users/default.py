@@ -3,6 +3,7 @@ import requests
 
 from django.contrib.auth.models import User
 from oauth2_provider.models import Application
+import random,string
 
 
 class DefaultService():
@@ -51,3 +52,7 @@ class DefaultService():
         application.save()
 
         return application
+
+    def random_token_generator(self):
+        lettersAndDigits = string.ascii_letters + string.digits
+        return ''.join(random.choice(lettersAndDigits) for i in range(30))
