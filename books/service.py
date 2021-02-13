@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator
 
 from rest_framework import serializers
+import json
 
 from library_management import config
 
@@ -14,17 +15,16 @@ class BooksService:
 
     def browse_books(self,page_no):
         try:
-            books = Books.objects.values()
+            books = Books.objects.all()
             paginator = Paginator(books, config.PAGE_SIZE)  # Show config.PAGE_SIZE contacts per page.
             page_books = paginator.get_page(page_no)
             result = {
                 "has_next" : page_books.has_next(),
                 "has_previous": page_books.has_previous()
             }
-            book_list = list()
-            for book in page_books.object_list:
-                book_list.append(book)
-            result["data"] = book_list
+            book_list = json.dumps(BookSerializer(page_books.object_list, many=True).data)
+            # import pdb;pdb.set_trace()
+            result["data"] = json.loads(book_list)
             return result
         except:
             return False

@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'update-book', book_view.update_book, name="UpdateBook"),
     url(r'delete-book', book_view.delete_book, name="DeleteBook"),
 
+    url(r'browse-authors', author_view.browse_authors, name="BrowseAuthors"),
     url(r'create-author', author_view.create_author, name="CreateAuthor"),
     url(r'update-author', author_view.update_author, name="UpdateAuthor"),
     url(r'delete-author', author_view.delete_author, name="DeleteAuthor"),
