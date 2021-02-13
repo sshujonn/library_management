@@ -32,6 +32,7 @@ urlpatterns = [
 
     url(r'create-category', book_view.create_category, name="CreateCategory"),
 
+    url(r'browse-book-loans', book_view.browse_book_loans, name="BrowseBookLoans"),
     url(r'create-book-loan', book_view.create_book_loan, name="CreateBookLoan"),
     url(r'update-book-loan', book_view.update_book_loan, name="UpdateBookLoan"),
 

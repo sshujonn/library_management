@@ -5,6 +5,7 @@ class CreateBookForm(forms.Form):
     name = forms.CharField(required=True)
     cover_image = forms.CharField(required=False)
     category_id = forms.IntegerField(required=True)
+    authors = forms.CharField(required=False)
 
 
 class UpdateBookForm(forms.Form):

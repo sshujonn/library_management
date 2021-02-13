@@ -36,6 +36,9 @@ def create_book(request):
                 response = BooksService().create_book(data)
                 if response.get("id"):
                     return Response(response, status=status.HTTP_200_OK)
+                elif response.get("error_code") == 404:
+                    return Response({"detail": "Invalid Author"},
+                                    status=status.HTTP_404_NOT_FOUND)
                 else:
                     return Response(response, status=status.HTTP_409_CONFLICT)
             else:
@@ -99,7 +102,22 @@ def delete_book(request):
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-# Create your views here.
+
+@api_view(['GET'])
+def browse_book_loans(request):
+    try:
+        page_number = request.GET.get("page_no")
+        response = BookLoanService().browse_book_loans(page_number, request.user)
+        if response:
+            return Response(response, status=status.HTTP_200_OK)
+        else:
+            return Response({"message": "Something happened wrong!"},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    except Exception as ex:
+        return Response({"message": "Something happened wrong!", "data": ex},
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 @api_view(['POST'])
 def create_book_loan(request):
     try:

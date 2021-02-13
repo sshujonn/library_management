@@ -7,6 +7,7 @@ from library_management import config
 
 from books.models import Books, BookLoan, Category
 from users.models import Profile
+from authors.models import Author
 
 from users.service import ProfileSerializer
 
@@ -41,7 +42,16 @@ class BooksService:
                 cover_image=data["cover_image"],
                 category = Category.objects.get(pk=data["category_id"])
             )
+            authors_list=list()
+            try:
+                authors = data["authors"].split(",")
+                for author_id in authors:
+                    author = Author.objects.get(pk=author_id)
+                    authors_list.append(author)
+            except:
+                return {"error_code": 404}
             book.save()
+            book.authors.add(*authors_list)
             # import  pdb;pdb.set_trace()
             serializer = BookSerializer(book)
             return serializer.data
@@ -76,6 +86,27 @@ class BooksService:
             return {"message": "Invalid book id"}
 
 class BookLoanService:
+
+    def browse_book_loans(self,page_no, user):
+        try:
+            member = user.groups.filter(name=config.MEMBER)
+            if len(member)>0:
+                book_loans = BookLoan.objects.filter(profile_id=user.id)
+            else:
+                book_loans = BookLoan.objects.all()
+            paginator = Paginator(book_loans, config.PAGE_SIZE)  # Show config.PAGE_SIZE contacts per page.
+            page_book_loans = paginator.get_page(page_no)
+            result = {
+                "has_next" : page_book_loans.has_next(),
+                "has_previous": page_book_loans.has_previous()
+            }
+            book_list = json.dumps(BookLoanSerializer(page_book_loans.object_list, many=True).data)
+            # import pdb;pdb.set_trace()
+            result["data"] = json.loads(book_list)
+            return result
+        except:
+            return False
+
     def create_book_loan(self, data):
         try:
             #TODO add profile_id to the filter
@@ -87,14 +118,17 @@ class BookLoanService:
         taken_pending_status = [1,2] #Todo avoid magic number
         # import pdb;pdb.set_trace()
         if book_loan is None and data["request_type"]==1:
-            book_loan = BookLoan(
-                profile=Profile.objects.get(pk=data["profile_id"]),
-                book=Books.objects.get(pk=data["book_id"]),
-                request_type = data["request_type"] #Todo avoid magic number
-            )
-            book_loan.save()
-            serializer = BookLoanSerializer(book_loan)
-            return serializer.data
+            try:
+                book_loan = BookLoan(
+                    profile=Profile.objects.get(pk=data["profile_id"]),
+                    book=Books.objects.get(pk=data["book_id"]),
+                    request_type = data["request_type"] #Todo avoid magic number
+                )
+                book_loan.save()
+                serializer = BookLoanSerializer(book_loan)
+                return serializer.data
+            except:
+                return {"message": "Invalid Book"}
 
         elif book_loan and book_loan.status not in taken_pending_status:
             setattr(book_loan, "status", 1)
