@@ -8,6 +8,23 @@ from library_management import config
 
 
 # Create your views here.
+
+@api_view(['GET'])
+def browse_books(request):
+    try:
+        page_number = request.GET.get("page_no")
+        response = BooksService().browse_books(page_number)
+        if response:
+            return Response(response, status=status.HTTP_200_OK)
+        else:
+            return Response({"message": "Something happened wrong!"},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    except Exception as ex:
+        return Response({"message": "Something happened wrong!", "data": ex},
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
 @api_view(['POST'])
 def create_book(request):
     try:
