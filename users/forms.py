@@ -24,3 +24,4 @@ class CreateGroupForm(forms.Form):
 
 class AuthorizeUserForm(forms.Form):
     user_id = forms.IntegerField(required=True)
+    is_library_admin = forms.BooleanField(required=False)

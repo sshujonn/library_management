@@ -88,13 +88,11 @@ def create_group(request):
 def authorize_user(request):
     form = AuthorizeUserForm(request.POST)
     try:
-
-        # import pdb;pdb.set_trace()
         if form.is_valid():
-            profile_id = form.cleaned_data["user_id"]
+            data = form.cleaned_data
             library_admin = request.user.groups.filter(name=config.LIBRARY_ADMIN)
             if request.user.is_superuser or len(library_admin) > 0:
-                response = ProfileService().authorize_user(profile_id)
+                response = ProfileService().authorize_user(data)
                 if response.get("id"):
                     return Response(response, status=status.HTTP_200_OK)
                 else:

@@ -3,6 +3,6 @@ import os
 APP_NAME = "library_management"
 
 
-LIBRARY_ADMIN = "libary_admin"
+LIBRARY_ADMIN = "library_admin"
 
 MEMBER = "member"

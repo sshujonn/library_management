@@ -30,6 +30,11 @@ urlpatterns = [
 
     url(r'create-group', user_view.create_group, name="CreateGroup"),
 
+    url(r'create-category', book_view.create_category, name="CreateCategory"),
+
+    url(r'create-book-loan', book_view.create_book_loan, name="CreateBookLoan"),
+    url(r'update-book-loan', book_view.update_book_loan, name="UpdateBookLoan"),
+
     url(r'create-book', book_view.create_book, name="CreateBook"),
     url(r'update-book', book_view.update_book, name="UpdateBook"),
     url(r'delete-book', book_view.delete_book, name="DeleteBook"),

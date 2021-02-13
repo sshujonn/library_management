@@ -97,14 +97,20 @@ class ProfileService(DefaultService):
             return serializer.data
 
 
-    def authorize_user(self,profile_id):
+    def authorize_user(self,data):
         try:
+            profile_id = data["user_id"]
             user = Profile.objects.get(pk=profile_id)
         except:
             user = None
         if not user:
             return {"message": "User doesn't Exist"}
         else:
+            if "is_library_admin" in data and data["is_library_admin"]:
+                group = Group.objects.get(name=config.LIBRARY_ADMIN)
+            else:
+                group = Group.objects.get(name=config.MEMBER)
+            user.groups.add(group)
             setattr(user,"is_authorized", True)
             user.save()
             serializer = ProfileSerializer(user)

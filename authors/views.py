@@ -9,8 +9,6 @@ from library_management import config
 
 # Create your views here.
 @api_view(['POST'])
-@permission_classes([])
-@authentication_classes([])
 def create_author(request):
     try:
 
@@ -37,8 +35,6 @@ def create_author(request):
 
 
 @api_view(['POST'])
-@permission_classes([])
-@authentication_classes([])
 def update_author(request):
     try:
 
@@ -63,8 +59,6 @@ def update_author(request):
 
 
 @api_view(['POST'])
-@permission_classes([])
-@authentication_classes([])
 def delete_author(request):
     try:
         form = DeleteAuthorForm(request.POST)
