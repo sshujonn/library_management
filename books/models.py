@@ -22,10 +22,18 @@ class Books(models.Model):
 
 class BookLoan(models.Model):
     STATUS_CHOICES = (
-        (1, "Requested"),
+        (1, "Pending"),
         (2, "Taken"),
-        (3, "Returned")
+        (3, "Returned"),
+        (4, "Rejected")
+    )
+    REQUEST_CHOICES = (
+        (1, "Loan"),
+        (2, "Return")
     )
     book = models.ForeignKey(Books, on_delete=models.CASCADE)
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    status = models.SmallIntegerField(choices=STATUS_CHOICES, default="1", blank=True)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    status = models.SmallIntegerField(choices=STATUS_CHOICES, default=1, blank=True)
+    request_type = models.SmallIntegerField(choices=REQUEST_CHOICES, default=1, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
