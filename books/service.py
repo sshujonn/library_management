@@ -93,9 +93,9 @@ class BookLoanService:
         try:
             member = user.groups.filter(name=config.MEMBER)
             if len(member) > 0:
-                book_loans = BookLoan.objects.filter(profile_id=user.id)
+                book_loans = BookLoan.objects.filter(profile_id=user.id, status=1)# show only pending book loan request
             else:
-                book_loans = BookLoan.objects.all()
+                book_loans = BookLoan.objects.filter(status=1) # show only pending book loan request
             paginator = Paginator(book_loans, config.PAGE_SIZE)  # Show config.PAGE_SIZE contacts per page.
             page_book_loans = paginator.get_page(page_no)
             result = {
