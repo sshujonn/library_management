@@ -36,24 +36,25 @@ class BooksService:
         except:
             book = None
         if book is None:
-            book = Books(
-                name=data["name"],
-                cover_image=data["cover_image"],
-                category=Category.objects.get(pk=data["category_id"])
-            )
-            authors_list = list()
             try:
+                book = Books(
+                    name=data["name"],
+                    cover_image=data["cover_image"],
+                    category=Category.objects.get(pk=data["category_id"])
+                )
+                authors_list = list()
                 authors = data["authors"].split(",")
                 for author_id in authors:
                     author = Author.objects.get(pk=author_id)
                     authors_list.append(author)
+                book.save()
+                book.authors.add(*authors_list)
+                # import  pdb;pdb.set_trace()
+                serializer = BookSerializer(book)
+                return serializer.data
             except:
-                return {"error_code": 404}
-            book.save()
-            book.authors.add(*authors_list)
-            # import  pdb;pdb.set_trace()
-            serializer = BookSerializer(book)
-            return serializer.data
+                return {"error_code": 404, "message": "Invalid Author/Category"}
+
         else:
             return {"message": "Already Exists"}
 
@@ -63,9 +64,10 @@ class BooksService:
         except:
             book = None
         if book is not None:
-            setattr(book, "name", data["name"]) if "name" in data else ''
-            setattr(book, "cover_image", data["cover_image"]) if "cover_image" in data else ''
-            setattr(book, "category_id", data["category_id"]) if "category_id" in data else ''
+            # import pdb;pdb.set_trace()
+            setattr(book, "name", data["name"]) if "name" in data else book.name
+            setattr(book, "cover_image", data["cover_image"]) if data.get("cover_image") else book.cover_image
+            setattr(book, "category_id", data["category_id"]) if data.get("category_id") else book.category_id
             book.save()
             serializer = BookSerializer(book)
             return serializer.data

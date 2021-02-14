@@ -66,11 +66,16 @@ http://127.0.0.1:8000/admin
 ##### Signup for Author
 - To create Author an user must be created this regards. Can be done using ```'/email-signup'```
 - Using ```/create-author``` library admin can register an author.
+- Author can be updated and deleted by library admin using ```/update-author``` and ```/delete-author``` respectively
 
-##### Creating Book
-- Two steps needed.
+##### Book creation
+- Two steps needed to create book
     1. ```/create-category``` - Book Category Creation
     2. ```/create-book``` - Book Creation
+- Book can be updated and deleted by library admin using ```/update-book``` and ```/delete-book``` respectively
+
+##### Book Loan Creation
+
 
 ##### Library Admin functionalities
 - ```/create-category``` - Book Category Creation

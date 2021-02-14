@@ -37,7 +37,7 @@ def create_book(request):
                 if response.get("id"):
                     return Response(response, status=status.HTTP_200_OK)
                 elif response.get("error_code") == 404:
-                    return Response({"detail": "Invalid Author"},
+                    return Response({"detail": response.get("message")},
                                     status=status.HTTP_404_NOT_FOUND)
                 else:
                     return Response(response, status=status.HTTP_409_CONFLICT)
@@ -56,7 +56,7 @@ def create_book(request):
 def update_book(request):
     try:
 
-        form = UpdateBookForm(request.POST)
+        form = UpdateBookForm(request.POST, request.FILES)
 
         if form.is_valid():
             data = form.cleaned_data
