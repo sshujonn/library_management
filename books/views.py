@@ -28,7 +28,7 @@ def browse_books(request):
 @api_view(['POST'])
 def create_book(request):
     try:
-        form = CreateBookForm(request.POST)
+        form = CreateBookForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.cleaned_data
             library_admin = request.user.groups.filter(name=config.LIBRARY_ADMIN)

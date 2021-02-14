@@ -3,7 +3,7 @@ from django import forms
 
 class CreateBookForm(forms.Form):
     name = forms.CharField(required=True)
-    cover_image = forms.CharField(required=False)
+    cover_image = forms.ImageField(required=False)
     category_id = forms.IntegerField(required=True)
     authors = forms.CharField(required=False)
 
@@ -11,7 +11,7 @@ class CreateBookForm(forms.Form):
 class UpdateBookForm(forms.Form):
     id = forms.IntegerField(required=True)
     name = forms.CharField(required=False)
-    cover_image = forms.CharField(required=False)
+    cover_image = forms.ImageField(required=False)
     category_id = forms.IntegerField(required=False)
 
 
