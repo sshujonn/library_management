@@ -2,10 +2,10 @@ from rest_framework import status, permissions
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 
-from users.forms import EmailSignUpForm, EmailSignInForm, CreateGroupForm, AuthorizeUserForm
-from users.service import ProfileService
-from users.models import Profile
 from library_management import config
+from users.forms import EmailSignUpForm, EmailSignInForm, CreateGroupForm, AuthorizeUserForm
+from users.models import Profile
+from users.service import ProfileService
 
 
 # Create your views here.
@@ -32,6 +32,7 @@ def email_signup(request):
         return Response({"message": "Something happened wrong!", "data": ex},
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
 @api_view(['POST'])
 @permission_classes([])
 @authentication_classes([])
@@ -47,7 +48,8 @@ def email_signin(request):
 
             result = ProfileService().get_user_by_email(email, password)
             if not result:
-                return Response({"detail": "invalid credentials or unauthorized user"}, status=status.HTTP_401_UNAUTHORIZED)
+                return Response({"detail": "invalid credentials or unauthorized user"},
+                                status=status.HTTP_401_UNAUTHORIZED)
 
             return Response({"detail": "Success", "data": result}, status=status.HTTP_200_OK)
         else:
@@ -59,7 +61,8 @@ def email_signin(request):
         return Response({"message": "Something happened wrong!", "data": ex},
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-#To Create Group through API, Can be created from admin panel either
+
+# To Create Group through API, Can be created from admin panel either
 @api_view(['POST'])
 def create_group(request):
     form = CreateGroupForm(request.POST)
@@ -80,7 +83,7 @@ def create_group(request):
 
     except Exception as ex:
         return Response({"message": "Something happened wrong!", "data": ex},
-                    status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(['POST'])

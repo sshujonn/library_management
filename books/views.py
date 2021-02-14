@@ -2,7 +2,8 @@ from rest_framework import status, permissions
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 
-from books.forms import CreateBookForm, UpdateBookForm, DeleteBookForm, CreateBookLoanForm, UpdateBookLoanForm, ExportBookLoanForm, CreateCategoryForm
+from books.forms import CreateBookForm, UpdateBookForm, DeleteBookForm, CreateBookLoanForm, UpdateBookLoanForm, \
+    ExportBookLoanForm, CreateCategoryForm
 from books.service import BooksService, BookLoanService, CategoryService
 from library_management import config
 
@@ -22,7 +23,6 @@ def browse_books(request):
     except Exception as ex:
         return Response({"message": "Something happened wrong!", "data": ex},
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 
 @api_view(['POST'])
@@ -102,7 +102,6 @@ def delete_book(request):
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-
 @api_view(['GET'])
 def browse_book_loans(request):
     try:
@@ -124,7 +123,7 @@ def create_book_loan(request):
         form = CreateBookLoanForm(request.POST)
         if form.is_valid():
             member = request.user.groups.filter(name=config.MEMBER)
-            if len(member)>0:
+            if len(member) > 0:
                 data = form.cleaned_data
                 data["profile_id"] = request.user.id
                 response = BookLoanService().create_book_loan(data)
@@ -143,13 +142,14 @@ def create_book_loan(request):
         return Response({"message": "Something happened wrong!", "data": ex},
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
 @api_view(['POST'])
 def update_book_loan(request):
     try:
         form = UpdateBookLoanForm(request.POST)
         if form.is_valid():
             library_admin = request.user.groups.filter(name=config.LIBRARY_ADMIN)
-            if len(library_admin)>0 or request.user.is_superuser:
+            if len(library_admin) > 0 or request.user.is_superuser:
                 data = form.cleaned_data
                 response = BookLoanService().update_book_loan(data)
                 if response.get("id"):
@@ -167,6 +167,7 @@ def update_book_loan(request):
     except Exception as ex:
         return Response({"message": "Something happened wrong!", "data": ex},
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 @api_view(['GET'])
 def export_book_loan(request):

@@ -37,8 +37,6 @@ urlpatterns = [
     url(r'update-book-loan', book_view.update_book_loan, name="UpdateBookLoan"),
     url(r'export-book-loan', book_view.export_book_loan, name="ExportBookLoan"),
 
-
-
     url(r'browse-books', book_view.browse_books, name="BrowseBooks"),
     url(r'create-book', book_view.create_book, name="CreateBook"),
     url(r'update-book', book_view.update_book, name="UpdateBook"),

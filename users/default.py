@@ -1,9 +1,9 @@
 import os
+import random
 import requests
-
+import string
 from django.contrib.auth.models import User
 from oauth2_provider.models import Application
-import random,string
 
 
 class DefaultService():
