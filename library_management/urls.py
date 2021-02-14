@@ -26,7 +26,9 @@ urlpatterns = [
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'email-signup', user_view.email_signup, name="EmailSignUp"),
     url(r'email-signin', user_view.email_signin, name="EmailSignIn"),
+
     url(r'authorize-user', user_view.authorize_user, name="AuthorizeUser"),
+    url(r'browse-unauthorized-users', user_view.browse_unauthorized_users, name="BrowseUnauthorizedUsers"),
 
     url(r'create-group', user_view.create_group, name="CreateGroup"),
 

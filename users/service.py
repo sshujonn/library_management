@@ -1,7 +1,9 @@
+from django.core.paginator import Paginator
 from datetime import datetime, timedelta
 from django.contrib.auth.models import Group, Permission
 from oauth2_provider.models import AccessToken, RefreshToken, Application
 from rest_framework import serializers
+import json
 
 from library_management import config
 from library_management.settings import OAUTH2_PROVIDER
@@ -113,7 +115,20 @@ class ProfileService(DefaultService):
             serializer = ProfileSerializer(user)
             return serializer.data
 
-
+    def browse_unauthorized_users(self, page_no):
+        try:
+            unauth_members = Profile.objects.filter(is_authorized=False)
+            paginator = Paginator(unauth_members, config.PAGE_SIZE)  # Show config.PAGE_SIZE contacts per page.
+            page_unauth_members = paginator.get_page(page_no)
+            result = {
+                "has_next": page_unauth_members.has_next(),
+                "has_previous": page_unauth_members.has_previous()
+            }
+            unauth_member_list = json.dumps(ProfileSerializer(page_unauth_members.object_list, many=True).data)
+            result["data"] = json.loads(unauth_member_list)
+            return result
+        except:
+            return False
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
@@ -132,5 +147,6 @@ class ProfileSerializer(serializers.ModelSerializer):
             'phone_no',
             'image',
             'gender',
-            'updated_at'
+            'updated_at',
+            'is_authorized'
         )

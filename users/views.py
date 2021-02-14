@@ -108,3 +108,23 @@ def authorize_user(request):
     except Exception as ex:
         return Response({"message": "Something happened wrong!", "data": ex},
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['GET'])
+def browse_unauthorized_users(request):
+    try:
+        library_admin = request.user.groups.filter(name=config.LIBRARY_ADMIN)
+        if request.user.is_superuser or len(library_admin) > 0:
+            page_number = request.GET.get("page_no")
+            response = ProfileService().browse_unauthorized_users(page_number)
+            if response:
+                return Response(response, status=status.HTTP_200_OK)
+            else:
+                return Response({"message": "Something happened wrong!"},
+                                status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            return Response({"detail": "Unauthorized Access"},
+                            status=status.HTTP_401_UNAUTHORIZED)
+    except Exception as ex:
+        return Response({"message": "Something happened wrong!", "data": ex},
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
