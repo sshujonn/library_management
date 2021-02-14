@@ -20,7 +20,7 @@ from django.urls import path
 from authors import views as author_view
 from books import views as book_view
 from users import views as user_view
-
+admin.site.site_header = 'Library Management'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),

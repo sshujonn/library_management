@@ -14,7 +14,7 @@ class Profile(User):
 
     fullname = models.CharField(max_length=50)
     address = models.CharField(max_length=255)
-    phone_no = models.CharField(max_length=50)
+    phone_no = models.CharField(max_length=50, blank=True)
     gender = models.SmallIntegerField(choices=GENDER_CHOICES, default="1", blank=True)
     image = models.ImageField(null=True, upload_to='static/img/profile_image')
     is_authorized = models.BooleanField(default=False)

@@ -8,6 +8,7 @@ from library_management import config
 
 
 # Create your views here.
+#TODO:: Create and user decorator as response status are same.
 @api_view(['GET'])
 def browse_authors(request):
     try:
@@ -26,9 +27,7 @@ def browse_authors(request):
 @api_view(['POST'])
 def create_author(request):
     try:
-
         form = CreateAuthorForm(request.POST)
-
         if form.is_valid():
             data = form.cleaned_data
             library_admin = request.user.groups.filter(name=config.LIBRARY_ADMIN)
@@ -36,6 +35,8 @@ def create_author(request):
                 response = AuthorsService().create_author(data)
                 if response.get("id"):
                     return Response(response, status=status.HTTP_200_OK)
+                elif response.get("error_code"):
+                    return Response(response, status=status.HTTP_404_NOT_FOUND)
                 else:
                     return Response(response, status=status.HTTP_400_BAD_REQUEST)
             else:

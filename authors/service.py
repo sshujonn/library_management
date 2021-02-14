@@ -29,16 +29,22 @@ class AuthorsService:
             author = Author.objects.filter(profile_id=data["profile"])[:1].get()
         except:
             author = None
-        if author is None:
-            author = Author(
-                profile=Profile.objects.get(pk=data["profile"]),
-                anonym=data["anonym"]
-            )
-            author.save()
-            serializer = AuthorSerializer(author)
-            return serializer.data
-        else:
-            return {"message": "Already Exists"}
+        try:
+            if author is None:
+                profile = Profile.objects.get(pk=data["profile"])
+                setattr(profile, "is_authorized", True)
+                profile.save()
+                author = Author(
+                    profile=profile,
+                    anonym=data["anonym"]
+                )
+                author.save()
+                serializer = AuthorSerializer(author)
+                return serializer.data
+            else:
+                return {"message": "Already Exists"}
+        except:
+            return {"error_code": 404}
 
     def update_author(self, data):
         try:
