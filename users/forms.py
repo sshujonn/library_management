@@ -5,7 +5,7 @@ class SignUpForm(forms.Form):
     fullname = forms.CharField()
     address = forms.CharField(required=False)
     gender = forms.IntegerField(required=False)
-    image = forms.CharField(required=False)
+    image = forms.ImageField(required=False)
     phone_no = forms.CharField(required=False)
 
 

@@ -14,8 +14,7 @@ from library_management import config
 @authentication_classes([])
 def email_signup(request):
     try:
-        form = EmailSignUpForm(request.POST)
-
+        form = EmailSignUpForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.cleaned_data
             email = form.cleaned_data["email"]
