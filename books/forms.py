@@ -27,5 +27,8 @@ class UpdateBookLoanForm(forms.Form):
     loan_id = forms.IntegerField(required=True)
     action = forms.IntegerField(required=True)
 
+class ExportBookLoanForm(forms.Form):
+    status = forms.IntegerField(required=False)
+
 class CreateCategoryForm(forms.Form):
     name = forms.CharField(required=False)

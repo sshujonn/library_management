@@ -2,8 +2,11 @@ from django.core.paginator import Paginator
 
 from rest_framework import serializers
 import json
+from djqscsv import write_csv
+import datetime
 
 from library_management import config
+from library_management.settings import EXPORT_REPORT_URL, ROOT_PATH
 
 from books.models import Books, BookLoan, Category
 from users.models import Profile
@@ -167,6 +170,29 @@ class BookLoanService:
         else:
             return {"message": "Invalid request"}
 
+    def export_book_loan(self, data):
+        #getting report path declared in settings
+        base_path = EXPORT_REPORT_URL
+        #Initial file name
+        file_name = "export_book_loan_"
+        try:
+            #this if else block defines if the report will be for specific status of loan or for all
+            if data.get("status"):
+                queryset= BookLoan.objects.filter(status=data["status"])
+                file_name += str(data.get("status")) + "_"
+            else:
+                queryset = BookLoan.objects.all()
+                file_name += "all_"
+
+            #adding timestamp to file name to make unique file name
+            timestamp = round(datetime.datetime.now().timestamp())
+            file_name += str(timestamp) + ".csv"
+            file_path = base_path + file_name
+            with open(file_path[1:], 'wb') as csv_file:
+                write_csv(queryset, csv_file)
+            return {"file_path": file_path}
+        except:
+            return {"error": "Invalid Book Loan Data or file generation failed"}
 
 class CategoryService:
     def create_category(self, data):
