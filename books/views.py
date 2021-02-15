@@ -13,9 +13,9 @@ from library_management import config
 @api_view(['GET'])
 def browse_books(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: Browse books
+        Params: page no (optional)
+        Response: All books
     """
     try:
         page_number = request.GET.get("page_no")
@@ -33,9 +33,9 @@ def browse_books(request):
 @api_view(['POST'])
 def create_book(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: Create a book
+        Params: book information
+        Response: Created book
     """
     try:
         form = CreateBookForm(request.POST, request.FILES)
@@ -65,9 +65,9 @@ def create_book(request):
 @api_view(['POST'])
 def update_book(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: Update a book
+        Params: Book info
+        Response: Updated book
     """
     try:
 
@@ -96,9 +96,9 @@ def update_book(request):
 @api_view(['POST'])
 def delete_book(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: Delete a book
+        Params: book id
+        Response: Deleted book
     """
     try:
         form = DeleteBookForm(request.POST)
@@ -125,9 +125,9 @@ def delete_book(request):
 @api_view(['GET'])
 def browse_book_loans(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: Browse pending book loans
+        Params: page no (optional)
+        Response: All pending book loans (role wise)
     """
     try:
         page_number = request.GET.get("page_no")
@@ -145,9 +145,9 @@ def browse_book_loans(request):
 @api_view(['POST'])
 def create_book_loan(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: Create Book loan
+        Params: Book id, Loan/return request
+        Response: Created book loan
     """
     try:
         form = CreateBookLoanForm(request.POST)
@@ -176,9 +176,9 @@ def create_book_loan(request):
 @api_view(['POST'])
 def update_book_loan(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: Accept/reject book loan/return request
+        Params: loan id, action
+        Response: updated loan request
     """
     try:
         form = UpdateBookLoanForm(request.POST)
@@ -208,9 +208,9 @@ def update_book_loan(request):
 @api_view(['GET'])
 def export_book_loan(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: Export book loan request data (all/status wise)
+        Params: status
+        Response: Download url
     """
     try:
         form = ExportBookLoanForm(request.GET)
@@ -236,9 +236,9 @@ def export_book_loan(request):
 @api_view(['POST'])
 def create_category(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: create a book category
+        Params: category name
+        Response: created category
     """
     try:
         form = CreateCategoryForm(request.POST)

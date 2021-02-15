@@ -29,15 +29,16 @@ class DefaultService():
         return True, response
 
     def create_super_user(self):
+        password='admin123'
         user = User.objects.create_user(username='admin',
                                         email='admin@gmail.com',
-                                        password='admin123')
+                                        password=password)
 
         user.is_superuser = True
 
         user.save()
 
-        return user
+        return user, password
 
     def create_oath2_application(self, user_id):
         application = Application(

@@ -14,9 +14,9 @@ from users.service import ProfileService
 @authentication_classes([])
 def email_signup(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: signup for all types of users
+        Params: user info
+        Response: user info
     """
     try:
         form = EmailSignUpForm(request.POST, request.FILES)
@@ -43,9 +43,9 @@ def email_signup(request):
 @authentication_classes([])
 def email_signin(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: signin for all types of users
+        Params: username, password
+        Response: access token
     """
     try:
 
@@ -76,9 +76,9 @@ def email_signin(request):
 @api_view(['POST'])
 def create_group(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: user group creation
+        Params: group name
+        Response: group
     """
     form = CreateGroupForm(request.POST)
     try:
@@ -104,9 +104,9 @@ def create_group(request):
 @api_view(['POST'])
 def authorize_user(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: Authorize a signed up user
+        Params: user_id, is_library_admin
+        Response: Success/Failure with profile
     """
     form = AuthorizeUserForm(request.POST)
     try:
@@ -132,9 +132,9 @@ def authorize_user(request):
 @api_view(['GET'])
 def browse_unauthorized_users(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: shows unauthorized users
+        Params: page_no (optional)
+        Response: unauthorized users
     """
     try:
         library_admin = request.user.groups.filter(name=config.LIBRARY_ADMIN)

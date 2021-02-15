@@ -123,17 +123,20 @@ class ProfileService(DefaultService):
         except:
             user = None
         if not user:
-            return {"message": "User doesn't Exist"}
+            return {"message": "User/Group doesn't Exist"}
         else:
-            if "is_library_admin" in data and data["is_library_admin"]:
-                group = Group.objects.get(name=config.LIBRARY_ADMIN)
-            else:
-                group = Group.objects.get(name=config.MEMBER)
-            user.groups.add(group)
-            setattr(user, "is_authorized", True)
-            user.save()
-            serializer = ProfileSerializer(user)
-            return serializer.data
+            try:
+                if "is_library_admin" in data and data["is_library_admin"]:
+                    group = Group.objects.get(name=config.LIBRARY_ADMIN)
+                else:
+                    group = Group.objects.get(name=config.MEMBER)
+                user.groups.add(group)
+                setattr(user, "is_authorized", True)
+                user.save()
+                serializer = ProfileSerializer(user)
+                return serializer.data
+            except:
+                return {"message": "User/Group doesn't Exist"}
 
     def browse_unauthorized_users(self, page_no):
         """

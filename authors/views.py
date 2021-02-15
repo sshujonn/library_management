@@ -12,9 +12,9 @@ from library_management import config
 @api_view(['GET'])
 def browse_authors(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: Browse authors
+        Params: page_no (optional)
+        Response: authors list
     """
     try:
         page_number = request.GET.get("page_no")
@@ -32,9 +32,9 @@ def browse_authors(request):
 @api_view(['POST'])
 def create_author(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: create a author
+        Params: author info
+        Response: created author
     """
     try:
         form = CreateAuthorForm(request.POST)
@@ -63,9 +63,9 @@ def create_author(request):
 @api_view(['POST'])
 def update_author(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: update a author
+        Params: author info
+        Response: updated author
     """
     try:
 
@@ -92,9 +92,9 @@ def update_author(request):
 @api_view(['POST'])
 def delete_author(request):
     """
-        Functionality:
-        Params:
-        Response:
+        Functionality: delete a author
+        Params: author id
+        Response: deleted author info
     """
     try:
         form = DeleteAuthorForm(request.POST)
