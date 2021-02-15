@@ -800,12 +800,12 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "loan_id",
+									"key": "id",
 									"value": "1",
 									"type": "text"
 								},
 								{
-									"key": "action",
+									"key": "status",
 									"value": "3",
 									"description": "accept=3,reject=4",
 									"type": "text"
