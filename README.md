@@ -109,3 +109,4 @@ http://127.0.0.1:8000/admin
 ##### * All API Endpoints except ```/email-signup``` needs authorization token (Can be gotten from ```/o/token/``` )
 ##### * This project is developped using sqlite3. who uses this project can also use other database. by changing 'DATABASES' [Here](library_management/settings.py)
 ##### * db.sqlite3 is uploaded with dummy data for test purpose. Credentials for dummy users are given [here](Resources/API Collections/dummy.txt)
+##### * Created two testcases for API testing. To test run ```python manage.py test```
