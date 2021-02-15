@@ -1,5 +1,6 @@
 from django import forms
 
+from .models import BookLoan
 
 class CreateBookForm(forms.Form):
     name = forms.CharField(required=True)
@@ -24,9 +25,13 @@ class CreateBookLoanForm(forms.Form):
     request_type = forms.IntegerField(required=True)
 
 
-class UpdateBookLoanForm(forms.Form):
-    loan_id = forms.IntegerField(required=True)
-    action = forms.IntegerField(required=True)
+class UpdateBookLoanForm(forms.ModelForm):
+    class Meta:
+        model = BookLoan
+        fields = (
+            'id',
+            'status'
+        )
 
 
 class ExportBookLoanForm(forms.Form):

@@ -151,6 +151,7 @@ def update_book_loan(request):
             library_admin = request.user.groups.filter(name=config.LIBRARY_ADMIN)
             if len(library_admin) > 0 or request.user.is_superuser:
                 data = form.cleaned_data
+                data["id"] = form.data.dict().get("id")
                 response = BookLoanService().update_book_loan(data)
                 if response.get("id"):
                     return Response(response, status=status.HTTP_200_OK)
@@ -162,7 +163,7 @@ def update_book_loan(request):
                                 status=status.HTTP_401_UNAUTHORIZED)
 
         else:
-            return Response({"message": "Invalid Value"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": form.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     except Exception as ex:
         return Response({"message": "Something happened wrong!", "data": ex},

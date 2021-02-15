@@ -155,13 +155,13 @@ class BookLoanService:
     def update_book_loan(self, data):
         try:
             # TODO add profile_id to the filter
-            book_loan = BookLoan.objects.filter(pk=data["loan_id"])[:1].get()
+            book_loan = BookLoan.objects.filter(pk=data["id"])[:1].get()
         except:
             book_loan = None
         # check if the loan request is pending
         # import pdb;pdb.set_trace()
         if book_loan and book_loan.status == 1:  # Todo avoid magic number
-            setattr(book_loan, "status", data["action"])
+            setattr(book_loan, "status", data["status"])
             book_loan.save()
             serializer = BookLoanSerializer(book_loan)
             return serializer.data
