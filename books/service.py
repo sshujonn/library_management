@@ -29,7 +29,7 @@ class BooksService:
                 "has_previous": page_books.has_previous()
             }
             book_list = json.dumps(BookSerializer(page_books.object_list, many=True).data)
-            # import pdb;pdb.set_trace()
+
             result["data"] = json.loads(book_list)
             return result
         except:
@@ -79,7 +79,6 @@ class BooksService:
         except:
             book = None
         if book is not None:
-            # import pdb;pdb.set_trace()
             setattr(book, "name", data["name"]) if "name" in data else book.name
             setattr(book, "cover_image", data["cover_image"]) if data.get("cover_image") else book.cover_image
             setattr(book, "category_id", data["category_id"]) if data.get("category_id") else book.category_id
@@ -128,7 +127,7 @@ class BookLoanService:
                 "has_previous": page_book_loans.has_previous()
             }
             book_list = json.dumps(BookLoanSerializer(page_book_loans.object_list, many=True).data)
-            # import pdb;pdb.set_trace()
+
             result["data"] = json.loads(book_list)
             return result
         except:
@@ -147,7 +146,7 @@ class BookLoanService:
         # check if the book is taken or pending by the user already.
         # Loan request can only be created if same book is neither taken or requested by same user
         taken_pending_status = [1, 2]  # Todo avoid magic number
-        # import pdb;pdb.set_trace()
+
         if book_loan is None and data["request_type"] == 1:
             try:
                 book_loan = BookLoan(
@@ -193,7 +192,6 @@ class BookLoanService:
         except:
             book_loan = None
         # check if the loan request is pending
-        # import pdb;pdb.set_trace()
         if book_loan and book_loan.status == 1:  # Todo avoid magic number
             setattr(book_loan, "status", data["status"])
             book_loan.save()
