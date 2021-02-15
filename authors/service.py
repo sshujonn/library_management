@@ -10,6 +10,11 @@ from users.service import ProfileSerializer
 
 class AuthorsService:
     def browse_authors(self, page_no):
+        """
+            Functionality:
+            Params:
+            Response:
+        """
         try:
             authors = Author.objects.all()
             paginator = Paginator(authors, config.PAGE_SIZE)  # Show config.PAGE_SIZE contacts per page.
@@ -25,6 +30,11 @@ class AuthorsService:
             return False
 
     def create_author(self, data):
+        """
+            Functionality:
+            Params:
+            Response:
+        """
         try:
             author = Author.objects.filter(profile_id=data["profile"])[:1].get()
         except:
@@ -47,6 +57,11 @@ class AuthorsService:
             return {"error_code": 404}
 
     def update_author(self, data):
+        """
+            Functionality:
+            Params:
+            Response:
+        """
         try:
             author = Author.objects.get(pk=data["id"])
         except:
@@ -60,6 +75,11 @@ class AuthorsService:
             return {"message": "Invalid author id"}
 
     def delete_author(self, data):
+        """
+            Functionality:
+            Params:
+            Response:
+        """
         try:
             author = Author.objects.get(pk=data["id"])
         except:

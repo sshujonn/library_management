@@ -13,6 +13,11 @@ from users.models import Profile
 
 class ProfileService(DefaultService):
     def create_profile(self, data):
+        """
+            Functionality:
+            Params:
+            Response:
+        """
         try:
             profile = Profile.objects.filter(email=data["email"])[:1].get()
         except:
@@ -38,6 +43,11 @@ class ProfileService(DefaultService):
             return {"message": "Already Exists"}
 
     def get_user_by_email(self, email, password):
+        """
+            Functionality:
+            Params:
+            Response:
+        """
         try:
             user = Profile.objects.filter(email=email)[:1].get()
         except:
@@ -82,6 +92,11 @@ class ProfileService(DefaultService):
         return result
 
     def create_group(self, name):
+        """
+            Functionality:
+            Params:
+            Response:
+        """
         try:
             group = Group.objects.filter(name=name)[:1].get()
         except:
@@ -97,6 +112,11 @@ class ProfileService(DefaultService):
             return serializer.data
 
     def authorize_user(self, data):
+        """
+            Functionality:
+            Params:
+            Response:
+        """
         try:
             profile_id = data["user_id"]
             user = Profile.objects.get(pk=profile_id)
@@ -116,6 +136,11 @@ class ProfileService(DefaultService):
             return serializer.data
 
     def browse_unauthorized_users(self, page_no):
+        """
+            Functionality:
+            Params:
+            Response:
+        """
         try:
             unauth_members = Profile.objects.filter(is_authorized=False)
             paginator = Paginator(unauth_members, config.PAGE_SIZE)  # Show config.PAGE_SIZE contacts per page.

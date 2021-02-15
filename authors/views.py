@@ -11,6 +11,11 @@ from library_management import config
 #TODO:: Create and user decorator as response status are same.
 @api_view(['GET'])
 def browse_authors(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     try:
         page_number = request.GET.get("page_no")
         response = AuthorsService().browse_authors(page_number)
@@ -26,6 +31,11 @@ def browse_authors(request):
 
 @api_view(['POST'])
 def create_author(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     try:
         form = CreateAuthorForm(request.POST)
         if form.is_valid():
@@ -52,6 +62,11 @@ def create_author(request):
 
 @api_view(['POST'])
 def update_author(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     try:
 
         form = UpdateAuthorForm(request.POST)
@@ -76,6 +91,11 @@ def update_author(request):
 
 @api_view(['POST'])
 def delete_author(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     try:
         form = DeleteAuthorForm(request.POST)
         if form.is_valid():

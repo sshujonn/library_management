@@ -12,6 +12,11 @@ from library_management import config
 
 @api_view(['GET'])
 def browse_books(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     try:
         page_number = request.GET.get("page_no")
         response = BooksService().browse_books(page_number)
@@ -27,6 +32,11 @@ def browse_books(request):
 
 @api_view(['POST'])
 def create_book(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     try:
         form = CreateBookForm(request.POST, request.FILES)
         if form.is_valid():
@@ -54,6 +64,11 @@ def create_book(request):
 
 @api_view(['POST'])
 def update_book(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     try:
 
         form = UpdateBookForm(request.POST, request.FILES)
@@ -80,6 +95,11 @@ def update_book(request):
 
 @api_view(['POST'])
 def delete_book(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     try:
         form = DeleteBookForm(request.POST)
         if form.is_valid():
@@ -104,6 +124,11 @@ def delete_book(request):
 
 @api_view(['GET'])
 def browse_book_loans(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     try:
         page_number = request.GET.get("page_no")
         response = BookLoanService().browse_book_loans(page_number, request.user)
@@ -119,6 +144,11 @@ def browse_book_loans(request):
 
 @api_view(['POST'])
 def create_book_loan(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     try:
         form = CreateBookLoanForm(request.POST)
         if form.is_valid():
@@ -145,6 +175,11 @@ def create_book_loan(request):
 
 @api_view(['POST'])
 def update_book_loan(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     try:
         form = UpdateBookLoanForm(request.POST)
         if form.is_valid():
@@ -172,6 +207,11 @@ def update_book_loan(request):
 
 @api_view(['GET'])
 def export_book_loan(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     try:
         form = ExportBookLoanForm(request.GET)
         if form.is_valid():
@@ -195,6 +235,11 @@ def export_book_loan(request):
 
 @api_view(['POST'])
 def create_category(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     try:
         form = CreateCategoryForm(request.POST)
         if form.is_valid():

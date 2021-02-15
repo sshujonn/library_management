@@ -13,6 +13,11 @@ from users.service import ProfileService
 @permission_classes([])
 @authentication_classes([])
 def email_signup(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     try:
         form = EmailSignUpForm(request.POST, request.FILES)
         if form.is_valid():
@@ -37,6 +42,11 @@ def email_signup(request):
 @permission_classes([])
 @authentication_classes([])
 def email_signin(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     try:
 
         form = EmailSignInForm(request.POST)
@@ -65,6 +75,11 @@ def email_signin(request):
 # To Create Group through API, Can be created from admin panel either
 @api_view(['POST'])
 def create_group(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     form = CreateGroupForm(request.POST)
     try:
         if form.is_valid():
@@ -88,6 +103,11 @@ def create_group(request):
 
 @api_view(['POST'])
 def authorize_user(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     form = AuthorizeUserForm(request.POST)
     try:
         if form.is_valid():
@@ -111,6 +131,11 @@ def authorize_user(request):
 
 @api_view(['GET'])
 def browse_unauthorized_users(request):
+    """
+        Functionality:
+        Params:
+        Response:
+    """
     try:
         library_admin = request.user.groups.filter(name=config.LIBRARY_ADMIN)
         if request.user.is_superuser or len(library_admin) > 0:

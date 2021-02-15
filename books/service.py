@@ -15,6 +15,11 @@ from users.service import ProfileSerializer
 class BooksService:
 
     def browse_books(self, page_no):
+        """
+            Functionality:
+            Params:
+            Response:
+        """
         try:
             books = Books.objects.all()
             paginator = Paginator(books, config.PAGE_SIZE)  # Show config.PAGE_SIZE contacts per page.
@@ -31,6 +36,11 @@ class BooksService:
             return False
 
     def create_book(self, data):
+        """
+            Functionality:
+            Params:
+            Response:
+        """
         try:
             book = Books.objects.filter(name=data["name"])[:1].get()
         except:
@@ -59,6 +69,11 @@ class BooksService:
             return {"message": "Already Exists"}
 
     def update_book(self, data):
+        """
+            Functionality:
+            Params:
+            Response:
+        """
         try:
             book = Books.objects.get(pk=data["id"])
         except:
@@ -75,6 +90,11 @@ class BooksService:
             return {"message": "Invalid book id"}
 
     def delete_book(self, data):
+        """
+            Functionality:
+            Params:
+            Response:
+        """
         try:
             book = Books.objects.get(pk=data["id"])
         except:
@@ -90,6 +110,11 @@ class BooksService:
 class BookLoanService:
 
     def browse_book_loans(self, page_no, user):
+        """
+            Functionality:
+            Params:
+            Response:
+        """
         try:
             member = user.groups.filter(name=config.MEMBER)
             if len(member) > 0:
@@ -110,8 +135,12 @@ class BookLoanService:
             return False
 
     def create_book_loan(self, data):
+        """
+            Functionality:
+            Params:
+            Response:
+        """
         try:
-            # TODO add profile_id to the filter
             book_loan = BookLoan.objects.filter(book_id=data["book_id"], profile_id=data["profile_id"])[:1].get()
         except:
             book_loan = None
@@ -153,6 +182,11 @@ class BookLoanService:
             return {"message": "Invalid request"}
 
     def update_book_loan(self, data):
+        """
+            Functionality:
+            Params:
+            Response:
+        """
         try:
             # TODO add profile_id to the filter
             book_loan = BookLoan.objects.filter(pk=data["id"])[:1].get()
@@ -195,6 +229,11 @@ class BookLoanService:
 
 class CategoryService:
     def create_category(self, data):
+        """
+            Functionality:
+            Params:
+            Response:
+        """
         try:
             category = Category.objects.filter(name=data["name"])[:1].get()
         except:
