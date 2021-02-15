@@ -1,0 +1,29 @@
+Superuser:
+    username: admin
+    password: @dmin123
+
+Library Admin:
+    username: library_admin@gmail.com
+    password: admin123
+
+Author:
+    username: author_1@gmail.com
+    password: author123
+
+    username: author_2@gmail.com
+    password: author123
+
+    username: author_3@gmail.com
+    password: author123
+
+
+Member:
+    username: member@gmail.com
+    password: member123
+
+    username: member_1@gmail.com
+    password: member123
+
+    username: member_2@gmail.com
+    password: member123
+
