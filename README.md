@@ -1,10 +1,10 @@
 #### Install Project Prerequisites (On windows)
 ##### Install Python
-- check version if installed (python -V)
-- otherwise follow the steps from https://www.python.org/downloads/
+- Check version if installed (python -V)
+- Otherwise follow the steps from https://www.python.org/downloads/
 
 ##### Install pip
-- follow the steps from https://www.liquidweb.com/kb/install-pip-windows/
+- Follow the steps from https://www.liquidweb.com/kb/install-pip-windows/
 
 ##### Install Latest Version of Django
 - Follow the steps from https://docs.djangoproject.com/en/3.1/topics/install/
@@ -22,15 +22,15 @@ pip install -r requirements.txt
 ```
 
 ```
-python manage.py createsuperuser
-```
-
-```
 python manage.py makemigrations
 ```
 
 ```
 python manage.py migrate
+```
+
+```
+python manage.py createsuperuser
 ```
 
 ```
@@ -55,12 +55,12 @@ http://127.0.0.1:8000/admin
     1. Login to admin site and go [here](http://127.0.0.1:8000/admin/users/profile/) click on the user and ```make is_authorized checked, Groups=library_admin and save```
     2. Collect Client_id and secret from [here](http://127.0.0.1:8000/o/applications). And Use ```/o/token/``` provide necessary information for superuser. (Example: [Here](Resources/API Collections/library_management.json))
         - It will provide access token and refresh token for superuser.
-        - use this end point```/authorize-user``` and provide necessary info(*set is_library_admin=True) (Example: [Here](Resources/API Collections/library_management.json))
+        - Use this end point```/authorize-user``` and provide necessary info(*set is_library_admin=True) (Example: [Here](Resources/API Collections/library_management.json))
 
 - Now library admin can signin using ```/authorize-user``` and can do library administrative work using ```access_token``` got from response (Example: [Here](Resources/API Collections/library_management.json))
 
 ##### Sign up/Sign In for a Member
-- using ```'/email-signup'``` api member can signup
+- Using ```'/email-signup'``` api member can signup
 - S/he will be able to sign in and get token once authorized by Library Admin/Super User (using```/authorize-user``` and provide necessary info(*set is_library_admin=False))
 
 ##### Signup for Author
@@ -80,3 +80,22 @@ http://127.0.0.1:8000/admin
 - Admin can accept or reject book loan by using ```/update-book-loan```
 - Admin can export 
 
+##### Access Control
+- ```/email-signup``` -- Open
+- ```/email-signin``` -- Only signed up and authorized user
+- ```/authorize-user``` -- Super admin, Library admin
+- ```/browse-unauthorized-users``` -- Super admin, Library admin
+- ```/create-group``` -- Super admin, Library admin
+- ```/create-category``` -- Super admin, Library admin
+- ```/browse-book-loans``` -- Super admin, Library admin
+- ```/create-book-loan``` -- Member
+- ```/update-book-loan``` -- Super admin, Library admin
+- ```/export-book-loan``` -- Super admin, Library admin
+- ```/browse-books``` -- All authenticated users
+- ```/create-book``` -- Super admin, Library admin
+- ```/update-book``` -- Super admin, Library admin
+- ```/delete-book``` -- Super admin, Library admin
+- ```/browse-authors``` -- All authenticated users
+- ```/create-author``` -- Super admin, Library admin
+- ```/update-author``` -- Super admin, Library admin
+- ```/delete-author``` -- Super admin, Library admin
