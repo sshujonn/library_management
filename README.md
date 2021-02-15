@@ -74,12 +74,9 @@ http://127.0.0.1:8000/admin
     2. ```/create-book``` - Book Creation
 - Book can be updated and deleted by library admin using ```/update-book``` and ```/delete-book``` respectively
 
-##### Book Loan Creation
+##### Book Loan
+- Book loan can be created using ```/create-book-loan``` endpoint by member.
+- Admin can browse all pending book loan by using ```/browse-book-loans``` with page_no parameter where as member can only browse his own book loans.
+- Admin can accept or reject book loan by using ```/update-book-loan```
+- Admin can export 
 
-
-##### Library Admin functionalities
-- ```/create-category``` - Book Category Creation
-- ```/create-author``` - Author Creation
-- ```/create-book``` - Book Creation
-
-##### Member functionalities
