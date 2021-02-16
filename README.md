@@ -56,14 +56,14 @@ http://127.0.0.1:8000/admin
     
 
 ##### Sign up/Sign In for a library Admin
-- using ```'/email-signup'``` api and providing necessary information (Example: [Here](Resources/API Collections/library_management.json))
+- using ```'/email-signup'``` api and providing necessary information (Example: [Here](Resources/API_Collections/library_management.json))
 - This account need to be authorized by superadmin first which can be done by following two ways
     1. Login to admin site and go [here](http://127.0.0.1:8000/admin/users/profile/) click on the user and ```make is_authorized checked, Groups=library_admin and save```
-    2. Collect Client_id and secret from [here](http://127.0.0.1:8000/o/applications). And Use ```/o/token/``` provide necessary information for superuser. (Example: [Here](Resources/API Collections/library_management.json))
+    2. Collect Client_id and secret from [here](http://127.0.0.1:8000/o/applications). And Use ```/o/token/``` provide necessary information for superuser. (Example: [Here](Resources/API_Collections/library_management.json))
         - It will provide access token and refresh token for superuser.
-        - Use this end point```/authorize-user``` and provide necessary info(*set is_library_admin=True) (Example: [Here](Resources/API Collections/library_management.json))
+        - Use this end point```/authorize-user``` and provide necessary info(*set is_library_admin=True) (Example: [Here](Resources/API_Collections/library_management.json))
 
-- Now library admin can signin using ```/authorize-user``` and can do library administrative work using ```access_token``` got from response (Example: [Here](Resources/API Collections/library_management.json))
+- Now library admin can signin using ```/authorize-user``` and can do library administrative work using ```access_token``` got from response (Example: [Here](Resources/API_Collections/library_management.json))
 
 ##### Sign up/Sign In for a Member
 - Using ```'/email-signup'``` api member can signup
@@ -108,5 +108,5 @@ http://127.0.0.1:8000/admin
 
 ##### * All API Endpoints except ```/email-signup``` needs authorization token (Can be gotten from ```/o/token/``` )
 ##### * This project is developped using sqlite3. who uses this project can also use other database. by changing 'DATABASES' [Here](library_management/settings.py)
-##### * db.sqlite3 is uploaded with dummy data for test purpose. Credentials for dummy users are given [here](Resources/API Collections/dummy.txt)
+##### * db.sqlite3 is uploaded with dummy data for test purpose. Credentials for dummy users are given [here](Resources/API_Collections/dummy.txt)
 ##### * Created two testcases for API testing. To test run ```python manage.py test```
